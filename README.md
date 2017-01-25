@@ -1,8 +1,9 @@
-Bxog is a simple and fast HTTP router for Go (HTTP request multiplexer).
+# Bxog v.2
 
-[![API documentation](https://godoc.org/github.com/claygod/Bxog?status.svg)](https://godoc.org/github.com/claygod/Bxog)
-[![Go Report Card](https://goreportcard.com/badge/github.com/claygod/Bxog)](https://goreportcard.com/report/github.com/claygod/Bxog)
+Based on the Bxog, more comfortable because of the context of use, but at a slower router
 
+[![API documentation](https://godoc.org/github.com/claygod/BxogV2?status.svg)](https://godoc.org/github.com/claygod/BxogV2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/claygod/BxogV2)](https://goreportcard.com/report/github.com/claygod/BxogV2)
 # Usage
 
 An example of using the multiplexer:
