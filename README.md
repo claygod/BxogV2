@@ -1,9 +1,7 @@
-# Bxog v.2
+Bxog is a simple and fast HTTP router for Go (HTTP request multiplexer).
 
-Based on the Bxog, more comfortable because of the context of use, but at a slower router
-
-[![API documentation](https://godoc.org/github.com/claygod/BxogV2?status.svg)](https://godoc.org/github.com/claygod/BxogV2)
-[![Go Report Card](https://goreportcard.com/badge/github.com/claygod/BxogV2)](https://goreportcard.com/report/github.com/claygod/BxogV2)
+[![API documentation](https://godoc.org/github.com/claygod/Bxog?status.svg)](https://godoc.org/github.com/claygod/Bxog)
+[![Go Report Card](https://goreportcard.com/badge/github.com/claygod/Bxog)](https://goreportcard.com/report/github.com/claygod/Bxog)
 
 # Usage
 
@@ -12,7 +10,7 @@ An example of using the multiplexer:
 package main
 
 import (
-	"github.com/claygod/Bxog"
+	bx "github.com/claygod/BxogV2"
 	"io"
 	"net/http"
 )
@@ -26,9 +24,6 @@ func THandler(w http.ResponseWriter, req *http.Request) {
 	if x := (req.Context().Value("par")).(string); x != "" {
 		io.WriteString(w, " 'par' -> "+x+"\n")
 	}
-	if x := (req.Context().Value("name")).(string); x != "" {
-		io.WriteString(w, " 'name' -> "+x+"\n")
-	}
 }
 func PHandler(w http.ResponseWriter, req *http.Request) {
 	// Getting parameters
@@ -41,7 +36,7 @@ func PHandler(w http.ResponseWriter, req *http.Request) {
 
 // Main
 func main() {
-	m := bxog.New()
+	m := bx.New()
 	m.Add("/", IHandler)
 	m.Add("/abc/:par", THandler)
 	m.Add("/country/:name/capital/:city/valuta/:money", PHandler).
@@ -59,6 +54,17 @@ Click URLs:
 # Settings
 
 Necessary changes in the configuration of the multiplexer can be made in the configuration file [config.go](https://github.com/claygod/Bxog/blob/master/config.go)
+
+# Perfomance
+
+Bxog is the fastest router, showing the speed of query processing. Its speed is comparable to the speed of the popular multiplexers: Bone, Httprouter, Gorilla, Zeus.  Detailed benchmark [here](https://github.com/claygod/bxogtest). In short (less time, the better):
+
+- Bxog         330 ns/op
+- HttpRouter   395 ns/op
+- Zeus       23772 ns/op
+- GorillaMux 30223 ns/op
+- GorillaPat  1253 ns/op
+- Bone       63656 ns/op
 
 # API
 

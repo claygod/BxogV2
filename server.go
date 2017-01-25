@@ -5,23 +5,21 @@ package bxog
 // Server
 
 import (
-	//"context"
-	//"log"
+	"context"
 	"net/http"
 )
 
 // ServeHTTP looks for a matching route
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if route := r.index.find(req.URL.Path, req); route != nil {
-		route.genSplit(req.URL.Path[1:])
-		//log.Print(req.URL)
-		//ctx := req.Context()
-		//for u := len(route.sections) - 1; u >= 0; u-- {
-		//	if route.sections[u].typeSec == TYPE_ARG {
-		//		ctx = context.WithValue(ctx, route.sections[u].id, query[u])
-		//	}
-		//}
-		//req = req.WithContext(ctx)
+		query := route.genSplit(req.URL.Path[1:])
+		ctx := req.Context()
+		for u := len(route.sections) - 1; u >= 0; u-- {
+			if route.sections[u].typeSec == TYPE_ARG {
+				ctx = context.WithValue(ctx, route.sections[u].id, query[u])
+			}
+		}
+		req = req.WithContext(ctx)
 		route.handler(w, req)
 	} else {
 		r.Default(w, req)
